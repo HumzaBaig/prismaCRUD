@@ -27,10 +27,28 @@ model Car {
   user   User    @relation(fields: [userId], references: [id])
 }
 
-model CarBlogs {
-  id        String   @id @default(cuid())
-  content   String
-  createdAt DateTime @default(now())
-  userId    String
-  user      User     @relation(fields: [userId], references: [id])
+model CarBlog {
+  id         String                 @id @default(cuid())
+  content    String
+  createdAt  DateTime               @default(now())
+  userId     String
+  user       User                   @relation(fields: [userId], references: [id])
+  categories CategoriesOnCarBlogs[]
+}
+
+model CategoryCarBlogs {
+  id       String                 @id @default(cuid())
+  name     String
+  carBlogs CategoriesOnCarBlogs[]
+}
+
+model CategoriesOnCarBlogs {
+  carBlogId  String
+  carBlogs   CarBlog          @relation(fields: [carBlogId], references: [id])
+  categoryId String
+  categories CategoryCarBlogs @relation(fields: [categoryId], references: [id])
+  assignedAt DateTime         @default(now())
+  assignedBy String
+
+  @@id([carBlogId, categoryId])
 }
