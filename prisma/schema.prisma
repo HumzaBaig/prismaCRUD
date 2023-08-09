@@ -9,3 +9,16 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  id    String @id @default(cuid())
+  fname String
+  lname String
+}
+
+model Car {
+  id     String  @id @default(cuid())
+  color  String
+  bought Boolean @default(false)
+  name   String
+}
