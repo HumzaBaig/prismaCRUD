@@ -11,10 +11,11 @@ datasource db {
 }
 
 model User {
-  id    String @id @default(cuid())
-  fname String
-  lname String
-  car   Car?
+  id       String     @id @default(cuid())
+  fname    String
+  lname    String
+  car      Car?
+  CarBlogs CarBlogs[]
 }
 
 model Car {
@@ -22,6 +23,14 @@ model Car {
   color  String
   bought Boolean @default(false)
   name   String
-  user   User?   @relation(fields: [userId], references: [id])
-  userId String? @unique
+  userId String  @unique
+  user   User    @relation(fields: [userId], references: [id])
+}
+
+model CarBlogs {
+  id        String   @id @default(cuid())
+  content   String
+  createdAt DateTime @default(now())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
 }
