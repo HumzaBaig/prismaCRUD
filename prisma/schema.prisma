@@ -11,11 +11,11 @@ datasource db {
 }
 
 model User {
-  id       String     @id @default(cuid())
+  id       String    @id @default(cuid())
   fname    String
   lname    String
   car      Car?
-  CarBlogs CarBlogs[]
+  CarBlogs CarBlog[]
 }
 
 model Car {
@@ -28,27 +28,16 @@ model Car {
 }
 
 model CarBlog {
-  id         String                 @id @default(cuid())
+  id         String             @id @default(cuid())
   content    String
-  createdAt  DateTime               @default(now())
+  createdAt  DateTime           @default(now())
   userId     String
-  user       User                   @relation(fields: [userId], references: [id])
-  categories CategoriesOnCarBlogs[]
+  user       User               @relation(fields: [userId], references: [id])
+  categories CategoryCarBlogs[]
 }
 
 model CategoryCarBlogs {
-  id       String                 @id @default(cuid())
+  id       String    @id @default(cuid())
   name     String
-  carBlogs CategoriesOnCarBlogs[]
-}
-
-model CategoriesOnCarBlogs {
-  carBlogId  String
-  carBlogs   CarBlog          @relation(fields: [carBlogId], references: [id])
-  categoryId String
-  categories CategoryCarBlogs @relation(fields: [categoryId], references: [id])
-  assignedAt DateTime         @default(now())
-  assignedBy String
-
-  @@id([carBlogId, categoryId])
+  carBlogs CarBlog[]
 }
