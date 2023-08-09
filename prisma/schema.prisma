@@ -16,6 +16,9 @@ model User {
   lname    String
   car      Car?
   CarBlogs CarBlog[]
+  friendId String?   @unique
+  friend   User?     @relation(name: "Friend", fields: [friendId], references: [id])
+  friendOf User?     @relation(name: "Friend")
 }
 
 model Car {
